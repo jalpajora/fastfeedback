@@ -1,12 +1,15 @@
-import { ProvideAuth } from '../library/auth';
-import '../styles/globals.css';
+import { ChakraProvider } from '@chakra-ui/react';
+import { ProvideAuth } from 'library/auth';
+import theme from 'styles/theme';
 
-function MyApp({ Component, pageProps }) {
+const App = ({ Component, pageProps }) => {
   return (
-    <ProvideAuth>
-      <Component {...pageProps} />
-    </ProvideAuth>
+    <ChakraProvider theme={theme}>
+      <ProvideAuth>
+        <Component {...pageProps} />
+      </ProvideAuth>
+    </ChakraProvider>
   );
-}
+};
 
-export default MyApp;
+export default App;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext, createContext } from 'react';
-import firebase from './firebase';
+
 import {
   getAuth,
   signInWithPopup,
@@ -7,6 +7,7 @@ import {
   GithubAuthProvider,
   onAuthStateChanged
 } from 'firebase/auth';
+import { createUser } from 'library/db';
 
 const auth = getAuth();
 const provider = new GithubAuthProvider();
@@ -25,9 +26,22 @@ export const useAuth = () => {
 function useProvideAuth() {
   const [user, setUser] = useState(null);
 
-  console.log(user);
+  const handleUser = (rawUser) => {
+    if (rawUser) {
+      const user = formatUser(rawUser);
+
+      createUser(user.uid, user);
+      setUser(user);
+      return user;
+    } else {
+      setUser(false);
+      return false;
+    }
+  };
+
   const appSigninWithGitHub = async () => {
     const response = await signInWithPopup(auth, provider);
+    handleUser(response.user);
     return response.user;
   };
 
@@ -51,3 +65,13 @@ function useProvideAuth() {
     appSignOut
   };
 }
+
+const formatUser = (user) => {
+  return {
+    uid: user.uid,
+    email: user.email,
+    name: user.displayName,
+    provider: user.providerData[0].providerId,
+    photoUrl: user.photoURL
+  };
+};
