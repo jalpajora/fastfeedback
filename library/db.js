@@ -1,6 +1,12 @@
 // import * as admin from 'firebase-admin';
-import { getFirestore, setDoc, doc } from 'firebase/firestore/lite';
-import firebase from 'library/firebase';
+import {
+  getFirestore,
+  setDoc,
+  doc,
+  addDoc,
+  collection
+} from 'firebase/firestore/lite';
+import firebase from '@/library/firebase';
 
 const db = getFirestore(firebase.getApp());
 
@@ -13,4 +19,9 @@ export async function createUser(uid, data) {
   });
 
   return user;
+}
+
+export async function createSite(data) {
+  const siteCollection = collection(db, 'sites');
+  return await addDoc(siteCollection, data);
 }

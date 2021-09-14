@@ -7,7 +7,7 @@ import {
   GithubAuthProvider,
   onAuthStateChanged
 } from 'firebase/auth';
-import { createUser } from 'library/db';
+import { createUser } from '@/library/db';
 
 const auth = getAuth();
 const provider = new GithubAuthProvider();
