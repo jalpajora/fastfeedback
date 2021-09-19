@@ -1,13 +1,12 @@
+import { getAllSites } from '@/library/db-admin';
 import db from '@/library/firebase-admin';
 
 export default async (_, res) => {
-  const dbCollection = db.collection('sites');
-  const snapshot = await dbCollection.get();
-  let sites = [];
+  const { sites, error } = await getAllSites();
 
-  snapshot.forEach((doc) => {
-    sites.push({ id: doc.id, ...doc.data() });
-  });
+  if (error) {
+    res.status(500).json({ error });
+  }
 
   res.status(200).json({ sites });
 };
