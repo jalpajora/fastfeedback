@@ -25,3 +25,9 @@ export async function createSite(data) {
   const siteCollection = collection(db, 'sites');
   return await addDoc(siteCollection, data);
 }
+
+export async function createFeedback(data) {
+  console.log(data);
+  const feedbackeCollection = collection(db, 'feedback');
+  return await addDoc(feedbackeCollection, data);
+}
