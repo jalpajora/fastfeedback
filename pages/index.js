@@ -16,7 +16,7 @@ const Home = () => {
       h="100vh"
     >
       <Head>
-        <title>Fast Feedback</title>
+        <title>Fast Feedback!</title>
       </Head>
 
       <Logo {...theme?.icon?.logo} />
